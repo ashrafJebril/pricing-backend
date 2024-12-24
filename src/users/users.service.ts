@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -84,8 +87,8 @@ export class UsersService {
     await this.userRepository.update(id, updateData);
     const updatedUser = await this.findUserById(id);
     if (!updatedUser) {
-        throw new NotFoundException('User not found');
-      }
+      throw new NotFoundException('User not found');
+    }
     return updatedUser;
   }
 
