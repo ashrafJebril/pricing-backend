@@ -1,7 +1,19 @@
 /* eslint-disable prettier/prettier */
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-// eslint-disable-next-line prettier/prettier
+// Define the enum for roles
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+  MODERATOR = 'moderator',
+}
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -17,24 +29,24 @@ export class User {
   phoneNumber: string;
 
   @Column()
-  companyName: string;
+  password: string;
 
-  @Column()
-  location: string;
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.USER, // Default role
+  })
+  role: UserRole;
 
-  @Column()
-  password: string
+  @Column({ default: true })
+  isActive: boolean;
 
-  @Column({default:true})
-  isActive: boolean
-
-  @Column({default:false})
-  isDeleted:boolean
+  @Column({ default: false })
+  isDeleted: boolean;
 
   @CreateDateColumn()
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date
-
+  updatedAt: Date;
 }

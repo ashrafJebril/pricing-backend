@@ -20,6 +20,7 @@ export class Customer {
   companyName: string;
 
   @Column()
-  location: string;
-
+  address: string;
+  @Column()
+  city: string;
 }

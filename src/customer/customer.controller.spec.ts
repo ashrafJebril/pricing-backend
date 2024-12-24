@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Test, TestingModule } from '@nestjs/testing';
 import { CustomerController } from './customer.controller';
 
@@ -12,7 +13,7 @@ describe('CustomerController', () => {
     controller = module.get<CustomerController>(CustomerController);
   });
 
-  it('should be defined', () => {
+  it('shouldd be defined', () => {
     expect(controller).toBeDefined();
   });
 });
