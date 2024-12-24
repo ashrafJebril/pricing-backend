@@ -7,6 +7,7 @@ import { DatabaseModule } from './database.module';
 import { UploadModule } from './upload/upload.module'; // Import the UploadModule
 import { CustomerModule } from './customer/customer.module';
 import { UsersModule } from './users/users.module';
+import { QuoteModule } from './quote/quote.module';
 @Module({
   imports: [
     PriceModule,
@@ -14,6 +15,7 @@ import { UsersModule } from './users/users.module';
     UploadModule, // Add UploadModule here
     CustomerModule,
     UsersModule,
+    QuoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],
