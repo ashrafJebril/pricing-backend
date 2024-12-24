@@ -5,8 +5,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
-
+import { Quote } from '../../quote/entities/Quote.entity';
 // Define the enum for roles
 export enum UserRole {
   ADMIN = 'admin',
@@ -43,6 +44,9 @@ export class User {
 
   @Column({ default: false })
   isDeleted: boolean;
+
+  @OneToMany(()=> Quote, (quote)=> quote.creator)
+  quotes: Quote[]
 
   @CreateDateColumn()
   createdAt: Date;
