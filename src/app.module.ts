@@ -8,6 +8,7 @@ import { UploadModule } from './upload/upload.module'; // Import the UploadModul
 import { CustomerModule } from './customer/customer.module';
 import { UsersModule } from './users/users.module';
 import { QuoteModule } from './quote/quote.module';
+import { ReportModule } from './report/report.module';
 @Module({
   imports: [
     PriceModule,
@@ -16,6 +17,7 @@ import { QuoteModule } from './quote/quote.module';
     CustomerModule,
     UsersModule,
     QuoteModule,
+    ReportModule
   ],
   controllers: [AppController],
   providers: [AppService],

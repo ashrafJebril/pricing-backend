@@ -4,19 +4,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './entities/User.entity';
+import { Users } from './entities/User.entity';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedException, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(Users)
+    private readonly userRepository: Repository<Users>,
   ) {}
 
   // Create a new user with encrypted password
-  async createUser(userData: Partial<User>): Promise<Omit<User, 'password'>> {
+  async createUser(userData: Partial<Users>): Promise<Omit<Users, 'password'>> {
     const salt = await bcrypt.genSalt();
     userData.password = await bcrypt.hash(userData.password, salt);
     const newUser = this.userRepository.create(userData);
@@ -29,7 +29,7 @@ export class UsersService {
   async login(
     email: string,
     password: string,
-  ): Promise<Omit<User, 'password'>> {
+  ): Promise<Omit<Users, 'password'>> {
     const user = await this.userRepository.findOneBy({ email });
     if (!user || user.isDeleted) {
       throw new UnauthorizedException('Invalid credentials');
@@ -57,13 +57,13 @@ export class UsersService {
   }
 
   // Find all users
-  async findAllUsers(): Promise<Omit<User, 'password'>[]> {
+  async findAllUsers(): Promise<Omit<Users, 'password'>[]> {
     const users = await this.userRepository.find();
     return users.map(({ password, ...user }) => user);
   }
 
   // Find a user by ID
-  async findUserById(id: number): Promise<Omit<User, 'password'> | null> {
+  async findUserById(id: number): Promise<Omit<Users, 'password'> | null> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) return null;
     const { password, ...result } = user;
@@ -71,15 +71,15 @@ export class UsersService {
   }
 
   // Find a user by email
-  async findUserByEmail(email: string): Promise<User | null> {
+  async findUserByEmail(email: string): Promise<Users | null> {
     return this.userRepository.findOneBy({ email });
   }
 
   // Update a user's information
   async updateUser(
     id: number,
-    updateData: Partial<User>,
-  ): Promise<Omit<User, 'password'>> {
+    updateData: Partial<Users>,
+  ): Promise<Omit<Users, 'password'>> {
     if (updateData.password) {
       const salt = await bcrypt.genSalt();
       updateData.password = await bcrypt.hash(updateData.password, salt);
@@ -103,7 +103,7 @@ export class UsersService {
   }
 
   // Restore a soft-deleted user
-  async restoreUser(id: number): Promise<Omit<User, 'password'>> {
+  async restoreUser(id: number): Promise<Omit<Users, 'password'>> {
     await this.userRepository.update(id, { isDeleted: false });
     const restoredUser = await this.findUserById(id);
     return restoredUser;

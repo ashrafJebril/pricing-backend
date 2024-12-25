@@ -11,7 +11,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './entities/User.entity';
+import { Users } from './entities/User.entity';
 
 @Controller('users')
 export class UsersController {
@@ -19,7 +19,7 @@ export class UsersController {
 
   // Create a new user
   @Post()
-  async createUser(@Body() userData: Partial<User>): Promise<Partial<User>> {
+  async createUser(@Body() userData: Partial<Users>): Promise<Partial<Users>> {
     return this.userService.createUser(userData);
   }
 
@@ -28,7 +28,7 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() loginData: { email: string; password: string },
-  ): Promise<Partial<User>> {
+  ): Promise<Partial<Users>> {
     const { email, password } = loginData;
     return this.userService.login(email, password);
   }
@@ -45,13 +45,13 @@ export class UsersController {
 
   // Get all users
   @Get()
-  async findAllUsers(): Promise<Partial<User>[]> {
+  async findAllUsers(): Promise<Partial<Users>[]> {
     return this.userService.findAllUsers();
   }
 
   // Get a user by ID
   @Get(':id')
-  async findUserById(@Param('id') id: number): Promise<Partial<User> | null> {
+  async findUserById(@Param('id') id: number): Promise<Partial<Users> | null> {
     return this.userService.findUserById(id);
   }
 
@@ -59,8 +59,8 @@ export class UsersController {
   @Patch(':id')
   async updateUser(
     @Param('id') id: number,
-    @Body() updateData: Partial<User>,
-  ): Promise<Partial<User>> {
+    @Body() updateData: Partial<Users>,
+  ): Promise<Partial<Users>> {
     return this.userService.updateUser(id, updateData);
   }
 
@@ -80,7 +80,7 @@ export class UsersController {
 
   // Restore a soft-deleted user
   @Patch(':id/restore')
-  async restoreUser(@Param('id') id: number): Promise<Partial<User>> {
+  async restoreUser(@Param('id') id: number): Promise<Partial<Users>> {
     return this.userService.restoreUser(id);
   }
 }

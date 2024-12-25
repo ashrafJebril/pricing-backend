@@ -1,6 +1,6 @@
 import { Customer } from '../../customer/entities/customer.entity';
-import { User } from '../../users/entities/User.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Users } from '../../users/entities/User.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 export enum QuoteStatus {
   DRAFT = 'draft',
@@ -19,9 +19,9 @@ export class Quote {
   @Column()
   customerId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => Users)
   @JoinColumn({ name: 'creatorId' })
-  creator: User;
+  creator: Users;
 
   @ManyToOne(() => Customer)
   @JoinColumn({ name: 'customerId' })
@@ -36,4 +36,10 @@ export class Quote {
     default: QuoteStatus.DRAFT,
   })
   status: QuoteStatus;
+
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @UpdateDateColumn()
+    updatedAt: Date;
 }
